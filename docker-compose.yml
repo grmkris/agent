@@ -5,6 +5,8 @@ services:
     environment:
       - PASSWORD=${PASSWORD:-devpassword}
       - TZ=${TZ:-UTC}
+    expose:
+      - "8080"
     volumes:
       - workspace:/home/coder/workspace
       - extensions:/home/coder/.local/share/code-server
