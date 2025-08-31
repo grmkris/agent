@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: dev-environment
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+      - PASSWORD=${PASSWORD:-devpassword}
+      - SUDO_PASSWORD=${SUDO_PASSWORD:-devpassword}
+      - DEFAULT_WORKSPACE=/config/workspace
+    volumes:
+      - workspace:/config/workspace
+      - extensions:/config/.local/share/code-server
+      - gitconfig:/config/.gitconfig
+      - ssh-keys:/config/.ssh
+    restart: unless-stopped
+    
+  dev-tools:
+    build: .
+    container_name: dev-tools-container
+    volumes:
+      - workspace:/workspace
+      - gitconfig:/root/.gitconfig
+      - ssh-keys:/root/.ssh
+    command: sleep infinity
+    restart: unless-stopped
+
+volumes:
+  workspace:
+  extensions:
+  gitconfig:
+  ssh-keys:
