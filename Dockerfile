@@ -1,33 +1,24 @@
-FROM node:20-slim
+FROM codercom/code-server:latest
 
-# Install minimal dependencies
+# Switch to root to install packages
+USER root
+
+# Install Node.js, TypeScript, and essential tools
 RUN apt-get update && apt-get install -y \
     curl \
     wget \
     git \
-    vim \
-    nano \
     unzip \
     ca-certificates \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g typescript \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Bun for root
-RUN curl -fsSL https://bun.sh/install | bash
-ENV PATH="/root/.bun/bin:$PATH"
-
-# Install only TypeScript globally
-RUN npm install -g typescript
-
-# Create user and directories
-RUN useradd -m -s /bin/bash coder && \
-    mkdir -p /home/coder/workspace && \
-    chown -R coder:coder /home/coder
-
-# Install Bun for coder user and set PATH
+# Install Bun for the coder user
 USER coder
-WORKDIR /home/coder
 RUN curl -fsSL https://bun.sh/install | bash
 ENV PATH="/home/coder/.bun/bin:$PATH"
 
-# Default command
-CMD ["/bin/bash"]
+# Set working directory
+WORKDIR /home/coder

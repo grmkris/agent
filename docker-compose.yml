@@ -1,42 +1,15 @@
-version: '3.8'
-
 services:
   code-server:
     build: .
     container_name: dev-environment
     environment:
       - PASSWORD=${PASSWORD:-devpassword}
-      - SUDO_PASSWORD=${SUDO_PASSWORD:-devpassword}
       - TZ=${TZ:-UTC}
     volumes:
       - workspace:/home/coder/workspace
       - extensions:/home/coder/.local/share/code-server
-      - gitconfig:/home/coder/.gitconfig
-      - ssh-keys:/home/coder/.ssh
     restart: unless-stopped
-    command: |
-      bash -c "
-        # Install code-server
-        curl -fsSL https://code-server.dev/install.sh | sh
-        
-        # Create user directories
-        mkdir -p /home/coder/.local/share/code-server
-        mkdir -p /home/coder/workspace
-        mkdir -p /home/coder/.ssh
-        
-        # Set permissions
-        chmod 700 /home/coder/.ssh
-        
-        # Start code-server
-        exec code-server \
-          --bind-addr 0.0.0.0:8080 \
-          --user-data-dir /home/coder/.local/share/code-server \
-          --auth password \
-          /home/coder/workspace
-      "
 
 volumes:
   workspace:
   extensions:
-  gitconfig:
-  ssh-keys:
