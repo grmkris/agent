@@ -7,7 +7,7 @@ A complete development environment with VS Code (code-server) running in Docker,
 - 🖥️ **VS Code in Browser**: Full VS Code experience accessible from any device
 - 🔐 **Password Authentication**: Simple password-based access
 - 📱 **Mobile Friendly**: Works on phones and tablets
-- 🧰 **Pre-installed Tools**: Node.js, Bun, TypeScript, and essential dev tools
+- 🧰 **Pre-installed Tools**: Node.js, Bun, TypeScript, Claude Code AI assistant, and essential dev tools
 - 💾 **Persistent Storage**: Your workspace, extensions, and Git config persist across restarts
 - 🚀 **One-Click Deploy**: Ready for Coolify deployment
 
@@ -53,8 +53,8 @@ docker run -d -p 8080:8080 -e PASSWORD=your_password dev-environment
 - **Node.js 20** with npm
 - **Bun** (latest) - Fast JavaScript runtime
 - **TypeScript** with ts-node
-- **Essential packages**: prettier, eslint, nodemon
-- **System tools**: git, vim, nano, htop, tree, jq
+- **Claude Code** - AI-powered coding assistant
+- **System tools**: git, vim, nano, htop, tree, jq, ripgrep
 
 ### Storage
 - Your code and extensions are stored in `/home/coder/` inside the container
@@ -64,9 +64,24 @@ docker run -d -p 8080:8080 -e PASSWORD=your_password dev-environment
 
 1. **Access Code-server**: Visit your domain and enter your password
 2. **Open Terminal**: Use Ctrl+` or Terminal menu
-3. **Clone Repositories**: `git clone <your-repo-url>`
-4. **Install Dependencies**: Use `npm install` or `bun install`
-5. **Start Coding**: Everything persists across restarts!
+3. **Set up Claude Code**: Run `claude` and authenticate with your preferred method
+4. **Clone Repositories**: `git clone <your-repo-url>`
+5. **Install Dependencies**: Use `npm install` or `bun install`
+6. **Start Coding**: Use Claude Code AI assistance and code with confidence!
+
+### Claude Code Authentication
+
+After accessing your development environment, authenticate Claude Code:
+
+```bash
+# Start Claude Code
+claude
+
+# Follow the authentication prompts:
+# - Anthropic Console (requires billing at console.anthropic.com)
+# - Claude Pro/Max subscription
+# - Enterprise platforms (AWS Bedrock, Google Vertex AI)
+```
 
 ## Coolify Deployment Notes
 

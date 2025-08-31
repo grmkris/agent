@@ -3,7 +3,7 @@ FROM codercom/code-server:latest
 # Switch to root to install packages
 USER root
 
-# Install Node.js, TypeScript, and essential tools
+# Install Node.js, TypeScript, ripgrep, and essential tools
 RUN apt-get update && apt-get install -y \
     curl \
     wget \
@@ -11,9 +11,10 @@ RUN apt-get update && apt-get install -y \
     unzip \
     ca-certificates \
     sudo \
+    ripgrep \
     && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
-    && npm install -g typescript \
+    && npm install -g typescript @anthropic-ai/claude-code \
     && rm -rf /var/lib/apt/lists/*
 
 # Add coder user to sudo group for permission fixes
