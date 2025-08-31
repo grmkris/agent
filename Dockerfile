@@ -10,10 +10,19 @@ RUN apt-get update && apt-get install -y \
     git \
     unzip \
     ca-certificates \
+    sudo \
     && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g typescript \
     && rm -rf /var/lib/apt/lists/*
+
+# Add coder user to sudo group for permission fixes
+RUN usermod -aG sudo coder \
+    && echo "coder ALL=(ALL) NOPASSWD: /bin/chown" >> /etc/sudoers.d/coder
+
+# Copy and set up entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # Install Bun for the coder user
 USER coder
@@ -26,5 +35,6 @@ WORKDIR /home/coder
 # Expose port 8080 for code-server
 EXPOSE 8080
 
-# Start code-server with proper configuration
+# Set entrypoint and default command
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["code-server", "--bind-addr", "0.0.0.0:8080", "--auth", "password"]
