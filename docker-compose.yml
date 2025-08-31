@@ -5,6 +5,7 @@ services:
     environment:
       - PASSWORD=${PASSWORD:-devpassword}
       - TZ=${TZ:-UTC}
+      - SERVICE_FQDN_CODESERVER_8080
     expose:
       - "8080"
     volumes:
