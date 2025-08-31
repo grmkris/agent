@@ -5,9 +5,10 @@ services:
     environment:
       - PASSWORD=${PASSWORD:-devpassword}
       - TZ=${TZ:-UTC}
-      - SERVICE_FQDN_CODESERVER_8080
     expose:
       - "8080"
+    healthcheck:
+      disable: true
     volumes:
       - workspace:/home/coder/workspace
       - extensions:/home/coder/.local/share/code-server
