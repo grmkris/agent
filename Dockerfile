@@ -1,46 +1,33 @@
 FROM node:20-slim
 
-# Install system dependencies
+# Install minimal dependencies
 RUN apt-get update && apt-get install -y \
     curl \
     wget \
     git \
     vim \
     nano \
-    htop \
-    tree \
-    jq \
-    build-essential \
-    python3 \
-    python3-pip \
+    unzip \
     ca-certificates \
-    gnupg \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Bun
+# Install Bun for root
 RUN curl -fsSL https://bun.sh/install | bash
 ENV PATH="/root/.bun/bin:$PATH"
 
-# Install global packages for both Node.js and Bun
-RUN npm install -g \
-    typescript \
-    ts-node \
-    @types/node \
-    nodemon \
-    prettier \
-    eslint \
-    @typescript-eslint/parser \
-    @typescript-eslint/eslint-plugin
+# Install only TypeScript globally
+RUN npm install -g typescript
 
-# Install Bun global packages
-RUN bun install -g typescript
+# Create user and directories
+RUN useradd -m -s /bin/bash coder && \
+    mkdir -p /home/coder/workspace && \
+    chown -R coder:coder /home/coder
 
-# Set working directory
-WORKDIR /workspace
+# Install Bun for coder user and set PATH
+USER coder
+WORKDIR /home/coder
+RUN curl -fsSL https://bun.sh/install | bash
+ENV PATH="/home/coder/.bun/bin:$PATH"
 
-# Create directories for development
-RUN mkdir -p /workspace && \
-    chmod 755 /workspace
-
-# Default command (this will be overridden by code-server)
+# Default command
 CMD ["/bin/bash"]
