@@ -33,8 +33,8 @@ ENV PATH="/home/coder/.bun/bin:$PATH"
 # Set working directory
 WORKDIR /home/coder
 
-# Expose port 8080 for code-server
-EXPOSE 8080
+# Expose port 8080 for code-server and 3000 for dev server
+EXPOSE 8080 3000
 
 # Set entrypoint and default command
 ENTRYPOINT ["/entrypoint.sh"]
