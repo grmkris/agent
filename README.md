@@ -15,7 +15,7 @@ A complete development environment with VS Code (code-server) running in Docker,
 
 1. **Fork/Clone this repo** to your GitHub account
 2. **Create New Resource** in Coolify
-3. **Select your repository** and choose "Docker Compose" build pack
+3. **Select your repository** and choose "Dockerfile" build pack
 4. **Set environment variables**:
    - `PASSWORD`: Your secure password for code-server access
 5. **Deploy** and access via your assigned domain
@@ -33,10 +33,11 @@ cp .env.example .env
 # Edit your password
 nano .env
 
-# Start the development environment
-docker-compose up -d
+# Build and run the container
+docker build -t dev-environment .
+docker run -d -p 8080:8080 -e PASSWORD=your_password dev-environment
 
-# Access code-server at http://localhost:8443
+# Access code-server at http://localhost:8080
 ```
 
 ## Environment Variables
@@ -44,7 +45,6 @@ docker-compose up -d
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `PASSWORD` | Code-server login password | `devpassword` |
-| `SUDO_PASSWORD` | Sudo password inside code-server | `devpassword` |
 | `TZ` | Timezone | `UTC` |
 
 ## What's Included
@@ -56,11 +56,9 @@ docker-compose up -d
 - **Essential packages**: prettier, eslint, nodemon
 - **System tools**: git, vim, nano, htop, tree, jq
 
-### Persistent Volumes
-- `workspace/`: Your code and repositories
-- `extensions/`: VS Code extensions
-- `gitconfig/`: Git configuration
-- `ssh-keys/`: SSH keys for Git authentication
+### Storage
+- Your code and extensions are stored in `/home/coder/` inside the container
+- For persistence, mount volumes when running locally
 
 ## Usage
 
@@ -87,16 +85,16 @@ docker-compose up -d
 ## Troubleshooting
 
 ### Can't access code-server
-- Check if the `PASSWORD` environment variable is set
-- Verify the container is running: `docker-compose ps`
+- Check if the `PASSWORD` environment variable is set in Coolify
+- Verify the container is running in Coolify's container logs
 
 ### Extensions not persisting
-- Ensure the `extensions` volume is properly mounted
-- Check Coolify volume configuration
+- Extensions are stored in the container filesystem
+- For persistence, consider using Coolify's volume mounts
 
 ### Git authentication issues
-- Add your SSH keys to the `ssh-keys` volume
-- Or use HTTPS with personal access tokens
+- Use HTTPS with personal access tokens for simplicity
+- SSH keys can be added directly in the code-server terminal
 
 ## Contributing
 

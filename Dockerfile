@@ -22,3 +22,9 @@ ENV PATH="/home/coder/.bun/bin:$PATH"
 
 # Set working directory
 WORKDIR /home/coder
+
+# Expose port 8080 for code-server
+EXPOSE 8080
+
+# Start code-server with proper configuration
+CMD ["code-server", "--bind-addr", "0.0.0.0:8080", "--auth", "password"]
