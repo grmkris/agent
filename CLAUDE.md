@@ -42,7 +42,7 @@ This is a containerized development environment based on **code-server** running
 
 ### Build Tools
 - **build-essential** - gcc, make, etc.
-- **git** with helpful aliases
+- **git** version control
 - **vim/nano** - Text editors
 - **zip/unzip/p7zip** - Archive tools
 
@@ -66,7 +66,7 @@ This environment uses standard Linux commands and tools without custom aliases. 
 
 ### 1. Always Use Workspace
 ```bash
-cd ~/workspace  # or use 'projects' alias
+cd ~/workspace
 # All your projects should go here for persistence
 ```
 
